@@ -65,6 +65,90 @@ export type Database = {
         }
         Relationships: []
       }
+      finance_audit: {
+        Row: {
+          action: string
+          actor: string
+          created_at: string
+          id: string
+          new_value: Json | null
+          old_value: Json | null
+          reason: string
+          record_id: string | null
+        }
+        Insert: {
+          action: string
+          actor: string
+          created_at?: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          reason: string
+          record_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor?: string
+          created_at?: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          reason?: string
+          record_id?: string | null
+        }
+        Relationships: []
+      }
+      finance_members: {
+        Row: {
+          created_at: string
+          email: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      finance_records: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          created_by: string
+          data: Json
+          id: string
+          kind: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string
+          data?: Json
+          id?: string
+          kind: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          created_by?: string
+          data?: Json
+          id?: string
+          kind?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       payroll_runs: {
         Row: {
           created_at: string
@@ -163,6 +247,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      finance_action: {
+        Args: {
+          p_account?: string
+          p_action: string
+          p_amount?: number
+          p_id: string
+          p_rate?: number
+          p_rate_date?: string
+          p_reason: string
+          p_reference?: string
+          p_source?: string
+        }
+        Returns: undefined
+      }
+      finance_grant: {
+        Args: { p_email: string; p_role: string }
+        Returns: undefined
+      }
+      finance_role: { Args: never; Returns: string }
+      finance_save: {
+        Args: { p_data: Json; p_id?: string; p_kind: string; p_reason?: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
